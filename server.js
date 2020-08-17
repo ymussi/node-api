@@ -6,8 +6,11 @@ const fs = require('fs');
 
 const requireDir = require('require-dir');
 
+// definindo environment
+const DBENV = process.env.DBENV || "development";
+
 // carregando db_uri de um arquivo config.ini
-const config = ini.parse(fs.readFileSync('./config/config.ini', 'utf-8'));
+const config = ini.parse(fs.readFileSync(`./config/${DBENV}/config.ini`, 'utf-8'));
 
 // iniciando o App
 const app = express();
@@ -21,4 +24,10 @@ requireDir('./src/models');
 // rotas
 app.use('/api', require('./src/routes'));
 
-app.listen(3001);
+// Constants
+
+const PORT = process.env.PORT || 3001;
+const HOST = '0.0.0.0'
+
+app.listen(PORT, HOST);
+console.log(`Runing on http://${HOST}:${PORT}`);
