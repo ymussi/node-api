@@ -4,10 +4,9 @@ services:
   db:
     image: mongo
     container_name: node_api_dev_db
-    volumes:
-      - ./data/db:/data/db
+    restart: always
     ports:
-      - '27017:27017'
+      - '27027:27017'
     networks:
       - node-dev-network
 
@@ -21,16 +20,16 @@ services:
     restart: on-failure
     cpus: "0.4"
     mem_reservation: "120m"
-    ports:
-      - '9000:3001'
-    networks:
-      - node-dev-network
-    volumes:
-      - .:/app/node_api
     depends_on:
       - db
     links:
       - db
+    ports:
+      - '9000:3001'
+    volumes:
+      - .:/app/node_api
+    networks:
+      - node-dev-network
     command: ["wait-for-it", "db:27017", "--"]
 
 networks:
