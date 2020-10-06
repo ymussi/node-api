@@ -28,7 +28,7 @@ module.exports = {
         return res.json(product);
     },
 
-    async destroy(req, res) {
+    async deletee(req, res) {
         const product = await Product.findByIdAndDelete(req.params.id);
 
         return res.json(product);
